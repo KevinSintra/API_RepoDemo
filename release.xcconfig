@@ -1,0 +1,15 @@
+//
+//  release.xcconfig
+//  API_RepoDemo
+//
+//  Created by CymmetrikDev2 on 2022/9/7.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+IS_APP_NAME = DemoAPI
+IS_APP_VERSION = 0.0.1
+IS_APP_BUNDLE_ID = com.cymmetrik.API-RepoDemo
+
+EZ_Print_URL = https:\/\/cfd3c468-d904-43aa-bef5-bcb0dea9a8ad.mock.pstmn.io/api/
