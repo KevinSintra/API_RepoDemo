@@ -14,7 +14,7 @@ struct ContentView: View {
                 .padding()
             
             Button(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/) {
-                test()
+                test2()
             }
         }
     }
@@ -24,6 +24,7 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
+    
 }
 
 func test() {
@@ -33,8 +34,25 @@ func test() {
     
     let api: P_ManagerAPI = ManagerAPI()
     
-    api.getGenericRespnse(url: "getToken", requestContent: requestData, callback: { (result: Result<GetTokenResponse?>) in
+    api.getGenericRespnse(urlPath: "getToken", requestContent: requestData, callback: { (result: ResponseResult<GetTokenResponse?>) in
         print(result)
     })
     
+}
+
+let repoAPI: P_PepoAPIs  = RepoAPIs.default
+
+func test2() {
+    let requestData = GetTokenRequest()
+    requestData.action = "get"
+    requestData.data!.deviceID = "e3dea0f5-37f2-4d79-ae58-490af3228069"
+    
+    repoAPI.AccountHttpAPI.getUserToken(requestModel: requestData, callback: { (result: httpResult<GetTokenResponse?>) in
+        switch result {
+        case .success(let obj, _):
+            print(obj)
+        case .failure(let errMsg, _):
+            print(errMsg)
+        }
+    })
 }

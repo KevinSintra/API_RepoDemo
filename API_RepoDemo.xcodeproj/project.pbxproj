@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		649D2AA228CDF164007AFF94 /* AccountHttpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D2AA128CDF164007AFF94 /* AccountHttpAPI.swift */; };
+		649D2AA528CDF1EA007AFF94 /* BaseHttpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D2AA428CDF1EA007AFF94 /* BaseHttpAPI.swift */; };
+		649D2AA728CDFE50007AFF94 /* RepoAPIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D2AA628CDFE50007AFF94 /* RepoAPIs.swift */; };
 		649F594B28C98C3200864BFA /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649F594A28C98C3200864BFA /* BaseModel.swift */; };
 		649F594D28C98EA300864BFA /* GetTokenMdoel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649F594C28C98EA300864BFA /* GetTokenMdoel.swift */; };
 		649F594F28C9AC2400864BFA /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 649F594E28C9AC2400864BFA /* Launch Screen.storyboard */; };
@@ -20,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		649D2AA128CDF164007AFF94 /* AccountHttpAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHttpAPI.swift; sourceTree = "<group>"; };
+		649D2AA428CDF1EA007AFF94 /* BaseHttpAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseHttpAPI.swift; sourceTree = "<group>"; };
+		649D2AA628CDFE50007AFF94 /* RepoAPIs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoAPIs.swift; sourceTree = "<group>"; };
 		649F594A28C98C3200864BFA /* BaseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
 		649F594C28C98EA300864BFA /* GetTokenMdoel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokenMdoel.swift; sourceTree = "<group>"; };
 		649F594E28C9AC2400864BFA /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -48,6 +54,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		649D2AA028CDF0DB007AFF94 /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				649D2AA328CDF1CD007AFF94 /* Base */,
+				649D2AA128CDF164007AFF94 /* AccountHttpAPI.swift */,
+			);
+			path = APIs;
+			sourceTree = "<group>";
+		};
+		649D2AA328CDF1CD007AFF94 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				649D2AA428CDF1EA007AFF94 /* BaseHttpAPI.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		649F594828C98BCE00864BFA /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,7 +166,9 @@
 		64A167CB28C84487006D9279 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				649D2AA028CDF0DB007AFF94 /* APIs */,
 				649F594828C98BCE00864BFA /* Model */,
+				649D2AA628CDFE50007AFF94 /* RepoAPIs.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -226,9 +251,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				64A06A2328C8798F0086A9F4 /* ManagerAPI.swift in Sources */,
+				649D2AA528CDF1EA007AFF94 /* BaseHttpAPI.swift in Sources */,
+				649D2AA728CDFE50007AFF94 /* RepoAPIs.swift in Sources */,
 				64A167BC28C83AF7006D9279 /* ContentView.swift in Sources */,
 				64A06A2628C88ABB0086A9F4 /* Configuration.swift in Sources */,
 				64A167BA28C83AF7006D9279 /* API_RepoDemoApp.swift in Sources */,
+				649D2AA228CDF164007AFF94 /* AccountHttpAPI.swift in Sources */,
 				649F594D28C98EA300864BFA /* GetTokenMdoel.swift in Sources */,
 				649F594B28C98C3200864BFA /* BaseModel.swift in Sources */,
 			);

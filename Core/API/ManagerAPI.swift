@@ -9,23 +9,48 @@ import Foundation
 
 import Alamofire 
 
-internal enum Result<T> {
+
+// MARK: 使用 callback 來達成 ManagerAPI 的非同步溝通機制
+
+/// `ManagerAPI` http request 後使用的 callback.
+/// `T` 是 http response 的 json 欲轉換的型別.
+public enum ResponseResult<T> {
     
+    /// http request 成功時
     case success(_ obj: T, _ httpStatusCode: Int)
+    
+    /// http reqeust 失敗時
+    ///
+    /// - Parameters:
+    ///    - error: Alamofire API 的錯誤訊息
     case failure(_ error: String, _ httpStatusCode: Int)
 }
 
-internal protocol P_ManagerAPI {
+/// `ManagerAPI` 對外的規範協定
+public protocol P_ManagerAPI {
     
-    func getGenericRespnse<T, R>(url: String?, requestContent: T, callback: @escaping ((Result<R?>) -> Void)
+    /// 資料轉換通用型的對於 Http Request & Http Response, Domain & Header 走預設設定,
+    ///
+    /// - Parameters:
+    ///   - urlPath: URL path 的部分
+    ///   - requestContent: request content 的 model
+    ///   - callback: `ResponseResult<T>`
+    /// - Returns: Void
+    func getGenericRespnse<T, R>(urlPath: String?, requestContent: T, callback: @escaping ((ResponseResult<R?>) -> Void)
     ) -> Void where T: AnyObject, T: Codable, R: AnyObject, R: Codable
+}
+
+/// `ManagerAPI` 對內的規範協定
+internal protocol P_internnal_ManagerAPI {
     
     func objectToDic<T>(data: T) -> Dictionary<String, Any>? where T: Codable
     
     func jsonToObj<T>(jsonString: Data) -> T? where T: Codable
 }
 
-internal class ManagerAPI : P_ManagerAPI {
+protocol P_AllManagerAPI: P_ManagerAPI, P_internnal_ManagerAPI {}
+
+internal class ManagerAPI : P_AllManagerAPI {
     
     private let mDomainURL: String
     
@@ -37,11 +62,11 @@ internal class ManagerAPI : P_ManagerAPI {
         self.mHeaders = [HTTPHeader.contentType("application/json")]
     }
     
-    func getGenericRespnse<T, R>(url: String? = nil, requestContent: T, callback: @escaping ((Result<R?>) -> Void))
+    func getGenericRespnse<T, R>(urlPath: String? = nil, requestContent: T, callback: @escaping ((ResponseResult<R?>) -> Void))
     where T : AnyObject, T : Codable, R : AnyObject, R : Codable {
         
         var lUrl = self.mDomainURL
-        if(url != nil) { lUrl += url! }
+        if(urlPath != nil) { lUrl += urlPath! }
         let dic = self.objectToDic(data: requestContent)
         
         let afRequest = AF.request(lUrl, method: .post, parameters: dic, encoding: JSONEncoding.default, headers: self.mHeaders)
@@ -52,9 +77,9 @@ internal class ManagerAPI : P_ManagerAPI {
             switch response.result {
             case .success:
                 let resData: R? = self.jsonToObj(jsonString: response.data!)
-                callback(Result.success(resData, response.response?.statusCode ?? 0))
+                callback(ResponseResult.success(resData, response.response?.statusCode ?? 0))
             case .failure(let error):
-                callback(Result.failure(error.errorDescription ?? "", response.response?.statusCode ?? 0))
+                callback(ResponseResult.failure(error.errorDescription ?? "", response.response?.statusCode ?? 0))
             }
         }
     }
