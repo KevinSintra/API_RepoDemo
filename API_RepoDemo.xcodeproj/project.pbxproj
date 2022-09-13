@@ -20,6 +20,7 @@
 		64A167BC28C83AF7006D9279 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A167BB28C83AF7006D9279 /* ContentView.swift */; };
 		64A167BE28C83AF8006D9279 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64A167BD28C83AF8006D9279 /* Assets.xcassets */; };
 		64A167C128C83AF8006D9279 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64A167C028C83AF8006D9279 /* Preview Assets.xcassets */; };
+		64A3E29E28D06DD2008E4E13 /* AppExecutors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A3E29D28D06DD2008E4E13 /* AppExecutors.swift */; };
 		64A44AF028CEC11800E7915D /* DialogUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A44AEF28CEC11800E7915D /* DialogUtil.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		64A167CC28C84B1F006D9279 /* release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = release.xcconfig; sourceTree = "<group>"; };
 		64A167CD28C84B47006D9279 /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = debug.xcconfig; sourceTree = "<group>"; };
 		64A167CE28C8783A006D9279 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		64A3E29D28D06DD2008E4E13 /* AppExecutors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExecutors.swift; sourceTree = "<group>"; };
 		64A44AEF28CEC11800E7915D /* DialogUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogUtil.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -180,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				64A44AEF28CEC11800E7915D /* DialogUtil.swift */,
+				64A3E29D28D06DD2008E4E13 /* AppExecutors.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -264,6 +267,7 @@
 				64A06A2328C8798F0086A9F4 /* ManagerAPI.swift in Sources */,
 				649D2AA528CDF1EA007AFF94 /* BaseHttpAPI.swift in Sources */,
 				649D2AA728CDFE50007AFF94 /* RepoAPIs.swift in Sources */,
+				64A3E29E28D06DD2008E4E13 /* AppExecutors.swift in Sources */,
 				64A44AF028CEC11800E7915D /* DialogUtil.swift in Sources */,
 				64A167BC28C83AF7006D9279 /* ContentView.swift in Sources */,
 				64A06A2628C88ABB0086A9F4 /* Configuration.swift in Sources */,

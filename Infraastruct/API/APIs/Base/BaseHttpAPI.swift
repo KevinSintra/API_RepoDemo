@@ -24,5 +24,8 @@ public protocol P_BaseHttp {
     /// 此分類下的 API 接口是否有 root path
     var rootPathURL: String { get }
     
+    
+    /// 讓外部可注入 ManagerAPI 方便未來切換測試
+    /// - Parameter managerAPI: ``init(_:)
     init(_ managerAPI: P_ManagerAPI?)
 }

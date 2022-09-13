@@ -26,7 +26,8 @@ public enum ResponseResult<T> {
     case failure(_ error: String, _ httpStatusCode: Int)
 }
 
-/// `ManagerAPI` 對外的規範協定
+/// `ManagerAPI` 對外的規範協定.
+/// 通用的操作封裝後的 AF API, AF API 執行時會使用多執行緒!! 值得關注的是 response 回來後會切回 main thread !
 public protocol P_ManagerAPI {
     
     /// 資料轉換通用型的對於 Http Request & Http Response, Domain & Header 走預設設定,
@@ -73,7 +74,9 @@ internal class ManagerAPI : P_AllManagerAPI {
             .validate() //.validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
         
-        afRequest.responseData { response in
+        
+        // ref: github.com/Alamofire/Alamofire/issues/1111
+        afRequest.responseData(queue: .main) { response in
             switch response.result {
             case .success:
                 let resData: R? = self.jsonToObj(jsonString: response.data!)

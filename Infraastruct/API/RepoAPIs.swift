@@ -31,7 +31,6 @@ class RepoAPIs: P_PepoAPIs {
     }
     private var _accountAPI: P_AccountHttpAPI?
     
-    
     private let _managerAPI: P_ManagerAPI
     private init() {
         self._managerAPI = ManagerAPI()

@@ -22,17 +22,22 @@ internal class AccontHttpAPI : P_AccountHttpAPI {
     
     func getUserToken(requestModel: GetTokenRequest, callback: @escaping ((httpResult<GetTokenResponse?>) -> Void)) {
         
-        let urlPath = self._getUserTokenRoothPath
-        
-        self._managerAPI.getGenericRespnse(urlPath: urlPath, requestContent: requestModel,
-                                           callback: { (result: ResponseResult<GetTokenResponse?>) in
-            switch result {
-            case .success(let obj, _):
-                callback(httpResult.success(obj, 200))
-            case .failure(let errMsg, let statusCode):
-                callback(httpResult.failure(errMsg, statusCode))
-            }
-        })
+        // 這裡只是示範, 不應該在這層去操作 thread. 因為 `ManagerAPI` 底層已經會用新 thread 執行, response 會切回 mainthread
+        AppExecutors.default.longtimeTask {
+            
+            let urlPath = self._getUserTokenRoothPath
+            
+            self._managerAPI.getGenericRespnse(urlPath: urlPath, requestContent: requestModel,
+                                               callback: { (result: ResponseResult<GetTokenResponse?>) in
+                switch result {
+                case .success(let obj, _):
+                    callback(httpResult.success(obj, 200))
+                case .failure(let errMsg, let statusCode):
+                    callback(httpResult.failure(errMsg, statusCode))
+                }
+            })
+        }
+
     }
     
     let _rootPathUrl: String

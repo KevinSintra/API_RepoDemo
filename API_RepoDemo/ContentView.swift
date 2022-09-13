@@ -60,7 +60,7 @@ struct ContentView: View {
                 .padding()
 
             Button(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/) {
-                test2()
+                testThread()
             }
         }
         
@@ -90,6 +90,7 @@ func test() {
 let repoAPI: P_PepoAPIs  = RepoAPIs.default
 
 func test2() {
+    
     let requestData = GetTokenRequest()
     requestData.action = "get"
     requestData.data!.deviceID = "e3dea0f5-37f2-4d79-ae58-490af3228069"
@@ -99,6 +100,25 @@ func test2() {
         case .success(let obj, _):
             print(obj)
         case .failure(let errMsg, _):
+            print(errMsg)
+        }
+    })
+}
+
+func testThread() {
+    let requestData = GetTokenRequest()
+    requestData.action = "get"
+    requestData.data!.deviceID = "e3dea0f5-37f2-4d79-ae58-490af3228069"
+    
+    DispatchQueue.log(action: "start")
+    repoAPI.AccountHttpAPI.getUserToken(requestModel: requestData, callback: { (result: httpResult<GetTokenResponse?>) in
+        DispatchQueue.log(action: "back")
+        switch result {
+        case .success(let obj, _):
+            DispatchQueue.log(action: "success")
+            print(obj)
+        case .failure(let errMsg, _):
+            DispatchQueue.log(action: "error")
             print(errMsg)
         }
     })
