@@ -52,18 +52,135 @@ struct LoadingView<Content>: View where Content: View {
 
 }
 
-struct ContentView: View {
+struct ContentView: View, ScanSpectroDelegate {
+    
+    let remote: SpectroRemote
+    
+    init() {
+        remote = SpectroRemote(spectroTarget: .SpectroCR30)
+    }
+    
     var body: some View {
         
         VStack {
             Text("Hello, world!")
                 .padding()
 
-            Button(/*@START_MENU_TOKEN@*/"Button"/*@END_MENU_TOKEN@*/) {
-                testThread()
-            }
+            Button("scan") {
+                DispatchQueue.log(action: "scan start")
+                testScna()
+                DispatchQueue.log(action: "scan back")
+            }.padding(5)
+            
+            
+            Button("connect") {
+                let cr30 = DebugDemoAPI.foundDevice.filter { ($0.deviceSN ?? "").contains("CM") }.first
+                
+                if(cr30 != nil) {
+                    DispatchQueue.log(action: "connect start")
+                    
+                    remote.connect(device: cr30!) { result in
+                        
+                        DispatchQueue.log(action: "connect back")
+                        switch result {
+                        case .success:
+                            print("connect success")
+                            
+//                            testSettingSpectro()
+                        case .failure(let err):
+                            print(err)
+                        }
+                    }
+                }
+            }.padding(5)
+            
+            Button("setSpectro") {
+                
+                testSettingSpectro()
+            }.padding(5)
+            
+            Button("whiteCalibrate") {
+                
+                DispatchQueue.log(action: "whiteCalibrate start")
+                remote.whiteCalibrate { result in
+                    
+                    DispatchQueue.log(action: "whiteCalibrate end")
+                    switch result {
+                    case .success:
+                        print("whiteCalibrate success")
+                    case .failure(let err):
+                        print(err)
+                    }
+                }
+            }.padding(5)
+
+            Button("blackCalibrate") {
+                
+                DispatchQueue.log(action: "blackCalibrate start")
+                remote.blackCalibrate { result in
+                    
+                    DispatchQueue.log(action: "blackCalibrate end")
+                    switch result {
+                    case .success:
+                        print("blackCalibrate success")
+                        
+                        testSettingSpectro()
+                    case .failure(let err):
+                        print(err)
+                    }
+                }
+            }.padding(5)
+
+            Button("Masure"){
+                
+                DispatchQueue.log(action: "Masure start")
+                remote.measureColor { result in
+                    
+                    DispatchQueue.log(action: "Masure end")
+                    switch result {
+                    case .success:
+                        print("Masure success")
+                        
+                        testSettingSpectro()
+                    case .failure(let err):
+                        print(err)
+                    }
+                }
+            }.padding(5)
+            
         }
         
+    }
+}
+
+var foundDevice: [SpectroDevice] = []
+
+extension ContentView {
+    
+    func foundDevice(_ device: SpectroDevice) {
+        
+        DebugDemoAPI.foundDevice.append(device)
+    }
+    
+    func testScna() {
+        
+        remote.setScanDelegate(delegate: self)
+        remote.startScan()
+    }
+    
+    func testSettingSpectro() {
+        
+        DispatchQueue.log(action: "setSpectro start")
+        remote.setSpectrometer() { result in
+            
+            DispatchQueue.log(action: "setSpectro end")
+            switch result {
+            case .success:
+                print("set spectro success")
+            case .failure(let err):
+                print(err)
+            }
+        }
     }
 }
 
