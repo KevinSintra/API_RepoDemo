@@ -7,57 +7,17 @@
 
 import SwiftUI
 
-
-struct ActivityIndicator: UIViewRepresentable {
-
-    @Binding var isAnimating: Bool
-    let style: UIActivityIndicatorView.Style
-
-    func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
-        return UIActivityIndicatorView(style: style)
-    }
-
-    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
-        isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
-    }
-}
-
-struct LoadingView<Content>: View where Content: View {
-
-    @Binding var isShowing: Bool
-    var content: () -> Content
-
-    var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .center) {
-
-                self.content()
-                    .disabled(self.isShowing)
-                    .blur(radius: self.isShowing ? 3 : 0)
-
-                VStack {
-                    Text("Loading...")
-                    ActivityIndicator(isAnimating: .constant(false), style: .large)
-                }
-                .frame(width: geometry.size.width / 2,
-                       height: geometry.size.height / 5)
-                .background(Color.secondary.colorInvert())
-                .foregroundColor(Color.primary)
-                .cornerRadius(20)
-                .opacity(self.isShowing ? 1 : 0)
-
-            }
-        }
-    }
-
-}
+// MARK: 測試 => API Repo && 封裝光譜儀 SDK API
 
 struct ContentView: View, ScanSpectroDelegate {
     
     let remote: SpectroRemote
     
     init() {
-        remote = SpectroRemote(spectroTarget: .SpectroCR30)
+        
+        self.remote = SpectroRemote(spectroTarget: .SpectroCR30) // switch main thread
+//        remote = SpectroRemote(spectroTarget: .SpectroCR30, changeThreadToMain: false) // not switch
+        self.remote.setScanDelegate(delegate: self)
     }
     
     var body: some View {
@@ -67,9 +27,11 @@ struct ContentView: View, ScanSpectroDelegate {
                 .padding()
 
             Button("scan") {
-                DispatchQueue.log(action: "scan start")
-                testScna()
-                DispatchQueue.log(action: "scan back")
+                DispatchQueue.log(action: "ContentView: scan start")
+                
+                _ = remote.startScan()
+                
+                DispatchQueue.log(action: "ContentView: scan back")
             }.padding(5)
             
             
@@ -77,16 +39,14 @@ struct ContentView: View, ScanSpectroDelegate {
                 let cr30 = DebugDemoAPI.foundDevice.filter { ($0.deviceSN ?? "").contains("CM") }.first
                 
                 if(cr30 != nil) {
-                    DispatchQueue.log(action: "connect start")
+                    DispatchQueue.log(action: "ContentView: connect start")
                     
-                    remote.connect(device: cr30!) { result in
+                    self.remote.connect(device: cr30!) { result in
                         
-                        DispatchQueue.log(action: "connect back")
+                        DispatchQueue.log(action: "ContentView: connect back")
                         switch result {
                         case .success:
-                            print("connect success")
-                            
-//                            testSettingSpectro()
+                            print("ContentView: connect success")
                         case .failure(let err):
                             print(err)
                         }
@@ -94,20 +54,15 @@ struct ContentView: View, ScanSpectroDelegate {
                 }
             }.padding(5)
             
-            Button("setSpectro") {
-                
-                testSettingSpectro()
-            }.padding(5)
-            
             Button("whiteCalibrate") {
                 
-                DispatchQueue.log(action: "whiteCalibrate start")
-                remote.whiteCalibrate { result in
+                DispatchQueue.log(action: "ContentView: whiteCalibrate start")
+                self.remote.whiteCalibrate { result in
                     
-                    DispatchQueue.log(action: "whiteCalibrate end")
+                    DispatchQueue.log(action: "ContentView: whiteCalibrate end")
                     switch result {
                     case .success:
-                        print("whiteCalibrate success")
+                        print("ContentView: whiteCalibrate success")
                     case .failure(let err):
                         print(err)
                     }
@@ -116,71 +71,57 @@ struct ContentView: View, ScanSpectroDelegate {
 
             Button("blackCalibrate") {
                 
-                DispatchQueue.log(action: "blackCalibrate start")
-                remote.blackCalibrate { result in
+                DispatchQueue.log(action: "ContentView: blackCalibrate start")
+                self.remote.blackCalibrate { result in
                     
-                    DispatchQueue.log(action: "blackCalibrate end")
+                    DispatchQueue.log(action: "ContentView: blackCalibrate end")
                     switch result {
                     case .success:
-                        print("blackCalibrate success")
-                        
-                        testSettingSpectro()
+                        print("ContentView: blackCalibrate success")
                     case .failure(let err):
                         print(err)
                     }
                 }
             }.padding(5)
 
-            Button("Masure"){
+            Button("Masure") {
                 
-                DispatchQueue.log(action: "Masure start")
-                remote.measureColor { result in
+                DispatchQueue.log(action: "ContentView: Masure start")
+                
+                self.remote.measureColor { result in
+                    DispatchQueue.log(action: "ContentView: Masure end")
                     
-                    DispatchQueue.log(action: "Masure end")
                     switch result {
-                    case .success:
-                        print("Masure success")
-                        
-                        testSettingSpectro()
+                    case .successHasData(let data):
+                        print("ContentView: Masure success")
+                        print(data)
                     case .failure(let err):
                         print(err)
                     }
                 }
+                
             }.padding(5)
             
+            
+            Button("Dispose") {
+                DispatchQueue.log(action: "ContentView: Dispose")
+                
+                self.remote.dispose()
+            }.padding(5)
         }
         
     }
 }
 
-var foundDevice: [SpectroDevice] = []
+var foundDevice: [SpectroDevice] = [] // 儲存找到的藍芽設備集合
 
 extension ContentView {
     
+    /// 當 API 找到藍芽裝置時的 callback
+    /// - Parameter device: `SpectroDevice`
     func foundDevice(_ device: SpectroDevice) {
         
         DebugDemoAPI.foundDevice.append(device)
-    }
-    
-    func testScna() {
-        
-        remote.setScanDelegate(delegate: self)
-        remote.startScan()
-    }
-    
-    func testSettingSpectro() {
-        
-        DispatchQueue.log(action: "setSpectro start")
-        remote.setSpectrometer() { result in
-            
-            DispatchQueue.log(action: "setSpectro end")
-            switch result {
-            case .success:
-                print("set spectro success")
-            case .failure(let err):
-                print(err)
-            }
-        }
     }
 }
 
@@ -191,7 +132,8 @@ struct ContentView_Previews: PreviewProvider {
     
 }
 
-func test() {
+/// `ManagerAPI` 測試打 API
+func testManagerCoreAPI() {
     let requestData = GetTokenRequest()
     requestData.action = "get"
     requestData.data!.deviceID = "e3dea0f5-37f2-4d79-ae58-490af3228069"
@@ -206,7 +148,8 @@ func test() {
 
 let repoAPI: P_PepoAPIs  = RepoAPIs.default
 
-func test2() {
+/// `RepoAPIs` 測試打 API
+func testRepoAPIs() {
     
     let requestData = GetTokenRequest()
     requestData.action = "get"
@@ -222,6 +165,7 @@ func test2() {
     })
 }
 
+/// 測試使用 AF 打 API 後, Thread 是否為 Main. (是的, 他會切回 .main thread)
 func testThread() {
     let requestData = GetTokenRequest()
     requestData.action = "get"
@@ -232,10 +176,10 @@ func testThread() {
         DispatchQueue.log(action: "back")
         switch result {
         case .success(let obj, _):
-            DispatchQueue.log(action: "success")
+            DispatchQueue.log(action: "ContentView: success")
             print(obj)
         case .failure(let errMsg, _):
-            DispatchQueue.log(action: "error")
+            DispatchQueue.log(action: "ContentView: error")
             print(errMsg)
         }
     })

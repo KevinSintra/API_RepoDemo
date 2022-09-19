@@ -16,7 +16,7 @@ class DialogUtils {
     private var mIndicatorDic: [UIActivityIndicatorView: UIView] = [:]
     
     
-    /// 鎖定畫面的轉圈圈:  需提供當前 controller & UIActivityIndicatorView
+    /// 鎖定畫面的轉圈圈:  需提供當前 controller & UIActivityIndicatorView (只適用於 StoryBorad)
     /// - Parameters:
     ///   - VC: 當前的 UIViewController
     ///   - indicator: 須在 layout 上放一個轉圈圈元件
