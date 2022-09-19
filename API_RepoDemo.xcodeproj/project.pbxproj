@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6442E0A528D7FC6B0028EF61 /* ColorMeterKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6442E0A428D7FC6B0028EF61 /* ColorMeterKit */; };
 		647BF91828D2EEFD00D52FFE /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647BF91728D2EEFD00D52FFE /* LogUtils.swift */; };
 		649D2AA228CDF164007AFF94 /* AccountHttpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D2AA128CDF164007AFF94 /* AccountHttpAPI.swift */; };
 		649D2AA528CDF1EA007AFF94 /* BaseHttpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D2AA428CDF1EA007AFF94 /* BaseHttpAPI.swift */; };
@@ -23,7 +24,6 @@
 		64A167C128C83AF8006D9279 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64A167C028C83AF8006D9279 /* Preview Assets.xcassets */; };
 		64A3E29E28D06DD2008E4E13 /* AppExecutors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A3E29D28D06DD2008E4E13 /* AppExecutors.swift */; };
 		64A44AF028CEC11800E7915D /* DialogUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A44AEF28CEC11800E7915D /* DialogUtil.swift */; };
-		64B11F7D28D2BB42007C1179 /* ColorMeterKit in Frameworks */ = {isa = PBXBuildFile; productRef = 64B11F7C28D2BB42007C1179 /* ColorMeterKit */; };
 		64B11F8228D2BCF6007C1179 /* BaseSpectro.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B11F8128D2BCF6007C1179 /* BaseSpectro.swift */; };
 		64B11F8528D2CD2A007C1179 /* SpectroRemote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B11F8428D2CD2A007C1179 /* SpectroRemote.swift */; };
 		64B11F8728D2CE2D007C1179 /* SpectroCR30.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B11F8628D2CE2D007C1179 /* SpectroCR30.swift */; };
@@ -50,9 +50,6 @@
 		64A167CE28C8783A006D9279 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		64A3E29D28D06DD2008E4E13 /* AppExecutors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExecutors.swift; sourceTree = "<group>"; };
 		64A44AEF28CEC11800E7915D /* DialogUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogUtil.swift; sourceTree = "<group>"; };
-		64B11F7828D2BAA4007C1179 /* ColorMeterKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ColorMeterKit; path = ../ColorMeterKit; sourceTree = "<group>"; };
-		64B11F7928D2BAE5007C1179 /* ColorMeterKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ColorMeterKit; path = ../ColorMeterKit; sourceTree = "<group>"; };
-		64B11F7A28D2BB27007C1179 /* ColorMeterKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = ColorMeterKit; path = ../ColorMeterKit; sourceTree = "<group>"; };
 		64B11F8128D2BCF6007C1179 /* BaseSpectro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSpectro.swift; sourceTree = "<group>"; };
 		64B11F8428D2CD2A007C1179 /* SpectroRemote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectroRemote.swift; sourceTree = "<group>"; };
 		64B11F8628D2CE2D007C1179 /* SpectroCR30.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectroCR30.swift; sourceTree = "<group>"; };
@@ -64,7 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64A06A2928C88E500086A9F4 /* Alamofire in Frameworks */,
-				64B11F7D28D2BB42007C1179 /* ColorMeterKit in Frameworks */,
+				6442E0A528D7FC6B0028EF61 /* ColorMeterKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,9 +213,6 @@
 		64B11F7728D2BAA4007C1179 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				64B11F7828D2BAA4007C1179 /* ColorMeterKit */,
-				64B11F7928D2BAE5007C1179 /* ColorMeterKit */,
-				64B11F7A28D2BB27007C1179 /* ColorMeterKit */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -258,7 +252,7 @@
 			name = API_RepoDemo;
 			packageProductDependencies = (
 				64A06A2828C88E500086A9F4 /* Alamofire */,
-				64B11F7C28D2BB42007C1179 /* ColorMeterKit */,
+				6442E0A428D7FC6B0028EF61 /* ColorMeterKit */,
 			);
 			productName = API_RepoDemo;
 			productReference = 64A167B628C83AF7006D9279 /* DebugDemoAPI.app */;
@@ -290,6 +284,7 @@
 			mainGroup = 64A167AD28C83AF7006D9279;
 			packageReferences = (
 				64A06A2728C88E500086A9F4 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				6442E0A128D7FBEC0028EF61 /* XCRemoteSwiftPackageReference "ColorMeterKit" */,
 			);
 			productRefGroup = 64A167B728C83AF7006D9279 /* Products */;
 			projectDirPath = "";
@@ -550,6 +545,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6442E0A128D7FBEC0028EF61 /* XCRemoteSwiftPackageReference "ColorMeterKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/KevinSintra/ColorMeterKit";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		64A06A2728C88E500086A9F4 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -561,14 +564,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6442E0A428D7FC6B0028EF61 /* ColorMeterKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6442E0A128D7FBEC0028EF61 /* XCRemoteSwiftPackageReference "ColorMeterKit" */;
+			productName = ColorMeterKit;
+		};
 		64A06A2828C88E500086A9F4 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 64A06A2728C88E500086A9F4 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
-		};
-		64B11F7C28D2BB42007C1179 /* ColorMeterKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ColorMeterKit;
 		};
 		64B11F7E28D2BBBC007C1179 /* ColorMeterKit */ = {
 			isa = XCSwiftPackageProductDependency;
