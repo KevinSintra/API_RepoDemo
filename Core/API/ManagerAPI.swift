@@ -70,10 +70,11 @@ internal class ManagerAPI : P_AllManagerAPI {
         if(urlPath != nil) { lUrl += urlPath! }
         let dic = self.objectToDic(data: requestContent)
         
-        let afRequest = AF.request(lUrl, method: .post, parameters: dic, encoding: JSONEncoding.default, headers: self.mHeaders)
-            .validate() //.validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
-        
+        let afRequest = AF.request(lUrl, method: .post, 
+                                   parameters: dic, encoding: JSONEncoding.default,
+                                   headers: self.mHeaders, requestModifier: { $0.timeoutInterval = 10})
+        .validate() //.validate(statusCode: 200..<300)
+        .validate(contentType: ["application/json"])
         
         // ref: github.com/Alamofire/Alamofire/issues/1111
         afRequest.responseData(queue: .main) { response in

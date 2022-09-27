@@ -26,6 +26,12 @@ struct ContentView: View, ScanSpectroDelegate {
             Text("Hello, world!")
                 .padding()
 
+            Button("testRepoAPIs") {
+                DispatchQueue.log(action: "ContentView: testRepoAPIs start")
+                
+                testRepoAPIs()
+            }.padding(5)
+            
             Button("scan") {
                 DispatchQueue.log(action: "ContentView: scan start")
                 
@@ -156,6 +162,9 @@ func testRepoAPIs() {
     requestData.data!.deviceID = "e3dea0f5-37f2-4d79-ae58-490af3228069"
     
     repoAPI.AccountHttpAPI.getUserToken(requestModel: requestData, callback: { (result: httpResult<GetTokenResponse?>) in
+        
+        DispatchQueue.log(action: "getUserToken callback")
+        
         switch result {
         case .success(let obj, _):
             print(obj)
