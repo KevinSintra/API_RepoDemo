@@ -113,8 +113,8 @@
 		64A167AD28C83AF7006D9279 = {
 			isa = PBXGroup;
 			children = (
-				64B11F7728D2BAA4007C1179 /* Packages */,
 				64A167CE28C8783A006D9279 /* .gitignore */,
+				64B11F7728D2BAA4007C1179 /* Packages */,
 				64A167CD28C84B47006D9279 /* debug.xcconfig */,
 				64A167CC28C84B1F006D9279 /* release.xcconfig */,
 				64A167C928C8438E006D9279 /* Infraastruct */,
